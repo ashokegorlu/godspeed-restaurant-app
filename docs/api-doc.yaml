@@ -1,0 +1,863 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: "Godspeed: Sample Microservice"
+  description: Sample API calls demonstrating the functionality of Godspeed framework
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Mindgrep Technologies Pvt Ltd
+    email: talktous@mindgrep.com
+    url: https://docs.mindgrep.com/docs/microservices/intro
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:4000
+paths:
+  /another_workflow:
+    post:
+      summary: Call another (sub) workflow from main workflow
+      description: Here we are calling other yaml workflows from within the main
+        workflow. We are also using JSON schema for request body and params
+        validation
+      requestBody:
+        description: The body of the query
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_name:
+                  type: string
+              required:
+                - customer_name
+            examples:
+              sample_call:
+                summary: Customer name
+                description: Name of the customer
+                value:
+                  customer_name: Ayush
+      parameters:
+        - name: bank_id
+          in: query
+          required: true
+          description: ID of the bank
+          schema:
+            type: string
+          examples:
+            sample_bank_id:
+              value: okhdfc
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer_name:
+                    type: string
+                additionalProperties: true
+                required:
+                  - customer_name
+              examples:
+                example1:
+                  summary: Sample response
+                  value:
+                    application_id: PRM20478956N
+                    customer_name: Ayush
+  "/create/{entity_type}":
+    post:
+      summary: Create a user and show all users across Mongo or Postgres.
+      description: Create a user with posts and profile, as per the data model.
+        Returns all users created so far. Demonstrate same API for both Mongo
+        and Postgres.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                  required:
+                    - data
+                db:
+                  type: string
+              required:
+                - data
+                - db
+            examples:
+              Create a user:
+                value:
+                  db: mongo
+                  data:
+                    data:
+                      name: Rajesh
+                      email: rfd@gmail.com
+                      posts:
+                        create:
+                          title: Second post!
+                          slug: dfourth_post
+                          description: some description
+                          body: Hello World!
+                      profile:
+                        create:
+                          bio: google.com
+      parameters:
+        - name: entity_type
+          in: path
+          required: true
+          description: The type of entity to create and find later
+          schema:
+            type: string
+          examples:
+            sample_entity_type:
+              value: user
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+  /document:
+    post:
+      summary: upload document
+      description: upload document on httpbin
+      requestBody:
+        required: false
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                fileName:
+                  type: string
+                  format: binary
+  /helloworld:
+    get:
+      summary: hello world
+      description: print hello world
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Returns the greeting.
+          schema:
+            type: string
+        "400":
+          description: Invalid status value
+  /anything_coffee:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Gender:
+                  type: string
+              required:
+                - Gender
+            examples:
+              "{example_name}": {}
+      parameters:
+        - name: bank_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  application_id:
+                    type: string
+              examples:
+                example1:
+                  value:
+                    application_id: PRM20478956N
+        "400":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lender_response_code:
+                    type: string
+              examples:
+                example1:
+                  value:
+                    lender_response_code: E001
+  /anything:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Gender:
+                  type: string
+              required:
+                - Gender
+            examples:
+              "{example_name}": {}
+      parameters:
+        - name: bank_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  application_id:
+                    type: string
+              examples:
+                example1:
+                  value:
+                    application_id: PRM20478956N
+        "400":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lender_response_code:
+                    type: string
+              examples:
+                example1:
+                  value:
+                    lender_response_code: E001
+  "/postgres/category/{id}":
+    get:
+      summary: Fetch Category
+      description: Fetch Category from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    put:
+      summary: Update a Category
+      description: Update Category from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/Category"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      summary: Delete a Category
+      description: Delete Category from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/category:
+    post:
+      summary: Create a new Category
+      description: Create Category from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/Category"
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/category/search:
+    post:
+      summary: Fetch multiple Category
+      description: Fetch multiple Category from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        content:
+          application/json:
+            schema:
+              type: array
+  "/postgres/menuitems/{id}":
+    get:
+      summary: Fetch MenuItems
+      description: Fetch MenuItems from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    put:
+      summary: Update a MenuItems
+      description: Update MenuItems from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/MenuItems"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      summary: Delete a MenuItems
+      description: Delete MenuItems from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/menuitems:
+    post:
+      summary: Create a new MenuItems
+      description: Create MenuItems from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/MenuItems"
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/menuitems/search:
+    post:
+      summary: Fetch multiple MenuItems
+      description: Fetch multiple MenuItems from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        content:
+          application/json:
+            schema:
+              type: array
+  "/postgres/order/{id}":
+    get:
+      summary: Fetch Order
+      description: Fetch Order from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    put:
+      summary: Update a Order
+      description: Update Order from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/Order"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      summary: Delete a Order
+      description: Delete Order from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/order:
+    post:
+      summary: Create a new Order
+      description: Create Order from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/Order"
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/order/search:
+    post:
+      summary: Fetch multiple Order
+      description: Fetch multiple Order from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        content:
+          application/json:
+            schema:
+              type: array
+  "/postgres/orderitem/{id}":
+    get:
+      summary: Fetch OrderItem
+      description: Fetch OrderItem from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    put:
+      summary: Update a OrderItem
+      description: Update OrderItem from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/OrderItem"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      summary: Delete a OrderItem
+      description: Delete OrderItem from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/orderitem:
+    post:
+      summary: Create a new OrderItem
+      description: Create OrderItem from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/OrderItem"
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/orderitem/search:
+    post:
+      summary: Fetch multiple OrderItem
+      description: Fetch multiple OrderItem from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        content:
+          application/json:
+            schema:
+              type: array
+  "/postgres/owner/{id}":
+    get:
+      summary: Fetch Owner
+      description: Fetch Owner from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    put:
+      summary: Update a Owner
+      description: Update Owner from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/Owner"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      summary: Delete a Owner
+      description: Delete Owner from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/owner:
+    post:
+      summary: Create a new Owner
+      description: Create Owner from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/Owner"
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/owner/search:
+    post:
+      summary: Fetch multiple Owner
+      description: Fetch multiple Owner from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        content:
+          application/json:
+            schema:
+              type: array
+  "/postgres/restaurant/{id}":
+    get:
+      summary: Fetch Restaurant
+      description: Fetch Restaurant from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    put:
+      summary: Update a Restaurant
+      description: Update Restaurant from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/Restaurant"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+    delete:
+      summary: Delete a Restaurant
+      description: Delete Restaurant from database
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/restaurant:
+    post:
+      summary: Create a new Restaurant
+      description: Create Restaurant from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/postgres/Restaurant"
+      responses:
+        content:
+          application/json:
+            schema:
+              type: object
+  /postgres/restaurant/search:
+    post:
+      summary: Fetch multiple Restaurant
+      description: Fetch multiple Restaurant from database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        content:
+          application/json:
+            schema:
+              type: array
+  /run_parallel_tasks:
+    post:
+      summary: Running tasks in parallel
+      description: >
+        Run any three tasks in parallel. Each task can invoke a function or
+        another workflow. 
+
+        Here we are simply returning a string in each task. 
+
+        In response, we are returning a JSON with output from 1st task
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: parallel task1
+  /sum:
+    get:
+      summary: A workflow involving developer written JS function
+      description: This workflow invokes a developer defined function at path com.biz.sum
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Returns the sum of two numbers.
+          schema:
+            type: integer
+        "400":
+          description: Invalid status value
+  "/switch_test/{bank_id}":
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Gender:
+                  type: string
+                condition:
+                  type: string
+              required:
+                - condition
+            example:
+              Gender: Male
+              condition: 1st
+      parameters:
+        - name: bank_id
+          in: path
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: case - default
+definitions:
+  postgres:
+    Owner:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+          nullable: true
+    Restaurant:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        name:
+          type: string
+        since:
+          type: string
+          format: date-time
+        isOpen:
+          type: boolean
+          default: false
+        opsStartTime:
+          type: string
+          format: date-time
+        opsEndTime:
+          type: string
+          format: date-time
+        ownerId:
+          type: integer
+          nullable: true
+        slug:
+          type: string
+        description:
+          type: string
+          nullable: true
+        location:
+          type: string
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+    MenuItems:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        price:
+          type: integer
+        couponCode:
+          type: array
+          items:
+            type: string
+        restaurantId:
+          type: integer
+    Order:
+      type: object
+      properties:
+        frmoRestaurant:
+          type: integer
+        orderStatus:
+          type: string
+          default: NOT_INITIATED
+          enum:
+            - INITIATED
+            - NOT_INITIATED
+            - WAITING_FOR_APPROVAL_FROM_RESTAURANT
+            - WAITING_FOR_DELIVERY_PARTNER
+            - PLACED
+            - PICKUP_BY_DELIVERY_PARTNER
+            - DELIVERED
+            - READY_TO_PICKUP
+        placedAt:
+          type: string
+          format: date-time
+          nullable: true
+        fulfilledAt:
+          type: string
+          format: date-time
+          nullable: true
+    OrderItem:
+      type: object
+      properties:
+        menuItemId:
+          type: integer
+        quantity:
+          type: integer
+        orderId:
+          type: integer
