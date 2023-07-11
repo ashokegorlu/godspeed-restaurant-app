@@ -1,6 +1,6 @@
 '/switch_test/:bank_id.http.post': # event id. Will include path params. For ex. com.abc.do_kyc/{bank_id}/process/{user_id}
   fn: com.jfs.switch_case
-  body: 
+  body:
     description:
     required: # default value is false
     content:
@@ -8,7 +8,7 @@
         schema:
           type: object
           properties:
-            Gender: 
+            Gender:
               type: string
             condition:
               type: string
@@ -30,4 +30,5 @@
         text/plain:
           schema:
             type: string
+
             example: case - default

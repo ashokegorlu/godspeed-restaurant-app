@@ -6,6 +6,7 @@ Owner:
     name:
       type: string
       nullable: true
+
 Restaurant:
   type: object
   properties:

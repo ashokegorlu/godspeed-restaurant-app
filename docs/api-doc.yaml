@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 0.0.1
-  title: "Godspeed: Sample Microservice"
+  title: 'Godspeed: Sample Microservice'
   description: Sample API calls demonstrating the functionality of Godspeed framework
   termsOfService: http://swagger.io/terms/
   contact:
@@ -49,7 +49,7 @@ paths:
             sample_bank_id:
               value: okhdfc
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
@@ -66,7 +66,7 @@ paths:
                   value:
                     application_id: PRM20478956N
                     customer_name: Ayush
-  "/create/{entity_type}":
+  '/create/{entity_type}':
     post:
       summary: Create a user and show all users across Mongo or Postgres.
       description: Create a user with posts and profile, as per the data model.
@@ -118,7 +118,7 @@ paths:
             sample_entity_type:
               value: user
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
@@ -149,11 +149,11 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Returns the greeting.
           schema:
             type: string
-        "400":
+        '400':
           description: Invalid status value
   /anything_coffee:
     post:
@@ -168,7 +168,7 @@ paths:
               required:
                 - Gender
             examples:
-              "{example_name}": {}
+              '{example_name}': {}
       parameters:
         - name: bank_id
           in: query
@@ -176,7 +176,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
@@ -188,7 +188,7 @@ paths:
                 example1:
                   value:
                     application_id: PRM20478956N
-        "400":
+        '400':
           content:
             application/json:
               schema:
@@ -213,7 +213,7 @@ paths:
               required:
                 - Gender
             examples:
-              "{example_name}": {}
+              '{example_name}': {}
       parameters:
         - name: bank_id
           in: query
@@ -221,7 +221,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           content:
             application/json:
               schema:
@@ -233,7 +233,7 @@ paths:
                 example1:
                   value:
                     application_id: PRM20478956N
-        "400":
+        '400':
           content:
             application/json:
               schema:
@@ -245,7 +245,7 @@ paths:
                 example1:
                   value:
                     lender_response_code: E001
-  "/postgres/category/{id}":
+  '/postgres/category/{id}':
     get:
       summary: Fetch Category
       description: Fetch Category from database
@@ -267,7 +267,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/Category"
+              $ref: '#/definitions/postgres/Category'
       parameters:
         - name: id
           in: path
@@ -301,7 +301,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/Category"
+              $ref: '#/definitions/postgres/Category'
       responses:
         content:
           application/json:
@@ -321,7 +321,7 @@ paths:
           application/json:
             schema:
               type: array
-  "/postgres/menuitems/{id}":
+  '/postgres/menuitems/{id}':
     get:
       summary: Fetch MenuItems
       description: Fetch MenuItems from database
@@ -343,7 +343,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/MenuItems"
+              $ref: '#/definitions/postgres/MenuItems'
       parameters:
         - name: id
           in: path
@@ -377,7 +377,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/MenuItems"
+              $ref: '#/definitions/postgres/MenuItems'
       responses:
         content:
           application/json:
@@ -397,7 +397,7 @@ paths:
           application/json:
             schema:
               type: array
-  "/postgres/order/{id}":
+  '/postgres/order/{id}':
     get:
       summary: Fetch Order
       description: Fetch Order from database
@@ -419,7 +419,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/Order"
+              $ref: '#/definitions/postgres/Order'
       parameters:
         - name: id
           in: path
@@ -453,7 +453,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/Order"
+              $ref: '#/definitions/postgres/Order'
       responses:
         content:
           application/json:
@@ -473,7 +473,7 @@ paths:
           application/json:
             schema:
               type: array
-  "/postgres/orderitem/{id}":
+  '/postgres/orderitem/{id}':
     get:
       summary: Fetch OrderItem
       description: Fetch OrderItem from database
@@ -495,7 +495,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/OrderItem"
+              $ref: '#/definitions/postgres/OrderItem'
       parameters:
         - name: id
           in: path
@@ -529,7 +529,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/OrderItem"
+              $ref: '#/definitions/postgres/OrderItem'
       responses:
         content:
           application/json:
@@ -549,7 +549,7 @@ paths:
           application/json:
             schema:
               type: array
-  "/postgres/owner/{id}":
+  '/postgres/owner/{id}':
     get:
       summary: Fetch Owner
       description: Fetch Owner from database
@@ -571,7 +571,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/Owner"
+              $ref: '#/definitions/postgres/Owner'
       parameters:
         - name: id
           in: path
@@ -605,7 +605,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/Owner"
+              $ref: '#/definitions/postgres/Owner'
       responses:
         content:
           application/json:
@@ -625,7 +625,7 @@ paths:
           application/json:
             schema:
               type: array
-  "/postgres/restaurant/{id}":
+  '/postgres/restaurant/{id}':
     get:
       summary: Fetch Restaurant
       description: Fetch Restaurant from database
@@ -647,7 +647,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/Restaurant"
+              $ref: '#/definitions/postgres/Restaurant'
       parameters:
         - name: id
           in: path
@@ -681,7 +681,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/postgres/Restaurant"
+              $ref: '#/definitions/postgres/Restaurant'
       responses:
         content:
           application/json:
@@ -712,7 +712,7 @@ paths:
 
         In response, we are returning a JSON with output from 1st task
       responses:
-        "200":
+        '200':
           description: OK
           content:
             text/plain:
@@ -729,13 +729,13 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
+        '200':
           description: Returns the sum of two numbers.
           schema:
             type: integer
-        "400":
+        '400':
           description: Invalid status value
-  "/switch_test/{bank_id}":
+  '/switch_test/{bank_id}':
     post:
       requestBody:
         content:
@@ -759,7 +759,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: OK
           content:
             text/plain:

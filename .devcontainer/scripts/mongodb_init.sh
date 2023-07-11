@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Setting keyfile permissions"
 chmod 0600 /scripts/mongo-keyfile
 
